@@ -158,8 +158,7 @@ function getFollowCount($userid)
 	$result = $q->get_result();
 
 	//Check is any data was retrieved
-	if ($result->num_rows != 0)
-	{
+	if ($result->num_rows != 0) {
 		$row = $result->fetch_assoc();
 		return [$row['following'], $row['followers']];
 	}
@@ -177,14 +176,13 @@ function changeFollower($follower_id, $following_id)
 	$res = $q->get_result();
 	if ($res->num_rows != 0)
 		$follows = true;
-	
+
 	// If a user wants to follow
-	if (!$follows)
-	{
+	if (!$follows) {
 		$q = $db->prepare("INSERT INTO follows (follower_id, following_id) VALUES (?, ?)");
 		$q->bind_param("ii", $follower_id, $following_id);
-	// If a user want to unfollow
-	}else{
+		// If a user want to unfollow
+	} else {
 		$q = $db->prepare("DELETE FROM follows WHERE follower_id = ? and following_id = ?");
 		$q->bind_param("ii", $follower_id, $following_id);
 	}
@@ -206,6 +204,25 @@ function checkFollowing($follower_id, $following_id)
 	if ($result->num_rows != 0)
 		return true;
 	return false;
+}
+
+function changeTopicFollow($user_id, $topic_id)
+{
+	global $db;
+	$q = $db->prepare("SELECT * FROM topicfollows WHERE follower_id = ? AND topic_id = ?");
+	$q->bind_param("ii", $user_id, $topic_id);
+	$q->execute();
+	$res = $q->get_result();
+
+	if ($res->num_rows > 0) {
+		$q = $db->prepare("DELETE FROM topicfollows WHERE follower_id = ? AND topic_id = ?");
+		$q->bind_param("ii", $user_id, $topic_id);
+	} else {
+		$q = $db->prepare("INSERT INTO topicfollows (follower_id, topic_id) VALUES (?, ?)");
+		$q->bind_param("ii", $user_id, $topic_id);
+	}
+
+	return $q->execute();
 }
 
 //Get userid from username.
@@ -429,16 +446,13 @@ function getPostInfo($postid, $userid)
 {
 	global $db;
 	//We want to fine oput if the post belongs to the user
-	if ($userid != NULL)
-	{
+	if ($userid != NULL) {
 		$q = $db->prepare("SELECT title, media_url, caption, created_at FROM posts WHERE id = ? AND user_id = ?");
 		$q->bind_param("ii", $postid, $userid);
-	}
-	else
-	{
+	} else {
 		$q = $db->prepare("SELECT title, media_url, caption, created_at FROM posts WHERE id = ?");
 		$q->bind_param("i", $postid);
-	}	
+	}
 	$q->execute();
 	$res = $q->get_result();
 	//Check if the post exists
@@ -455,10 +469,9 @@ function getPostTopics($postid)
 	$q->bind_param("i", $postid);
 	$q->execute();
 	$res = $q->get_result();
-	if ($res->num_rows != 0)
-	{
+	if ($res->num_rows != 0) {
 		// fetch_all returns an array of rows (as numeric arrays by default)
-		$allRows = $res->fetch_all(MYSQLI_ASSOC); 
+		$allRows = $res->fetch_all(MYSQLI_ASSOC);
 
 		// Extract column values
 		return [true, $columnValues = array_column($allRows, 'topic_id')];
@@ -474,9 +487,8 @@ function getTopicPostCount($topicid)
 	$q->bind_param("i", $topicid);
 	$q->execute();
 	$res = $q->get_result();
-	if ($res->num_rows != 0)
-	{
-		$row = $res_>fetch_assoc();
+	if ($res->num_rows != 0) {
+		$row = $res -> fetch_assoc();
 		return [true, $row];
 	}
 	return [false, ''];
