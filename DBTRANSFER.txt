@@ -1,0 +1,9 @@
+Run hierdie in \mysql\bin directory om db te export:
+mysqldump -u root -p website > C:\xampp\htdocs\REII414Website\website.sql
+
+dan push jy die sql file op git. Volgende keer pull jy die db weer, en run:
+mysql -u root -p website < C:\xampp\htdocs\REII414Website\website.sql
+
+PASSWORD IS NET BLANK
+
+SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY, EXTRA FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'website' ORDER BY TABLE_NAME, ORDINAL_POSITION;
