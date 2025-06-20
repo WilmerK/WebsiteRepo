@@ -394,9 +394,9 @@ main {
 }
 
 .sidebar li {
-  padding: 8px 0;
+  padding: 6px 0;
+  padding-left: 15px; /* <-- this is your tab */
   border-bottom: 1px solid #eee;
-  cursor: pointer;
   transition: background 0.2s;
 }
 
@@ -423,4 +423,16 @@ main .post {
   margin-bottom: 15px;
   padding: 15px;
   font-size: 1rem;
+}
+
+/* Sidebar link styling */
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.sidebar a:hover {
+  color: #1877f2;
 }
