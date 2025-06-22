@@ -39,7 +39,7 @@ CREATE TABLE `follows` (
 
 LOCK TABLES `follows` WRITE;
 /*!40000 ALTER TABLE `follows` DISABLE KEYS */;
-INSERT INTO `follows` VALUES (1,2,'2025-06-20 14:29:54');
+INSERT INTO `follows` VALUES (1,2,'2025-06-20 14:29:54'),(1,4,'2025-06-21 07:24:06'),(1,5,'2025-06-20 16:15:29'),(1,6,'2025-06-21 07:23:47');
 /*!40000 ALTER TABLE `follows` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `postreplies` (
   KEY `fk_postreplies_user` (`user_id`),
   CONSTRAINT `fk_postreplies_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_postreplies_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `postreplies` (
 
 LOCK TABLES `postreplies` WRITE;
 /*!40000 ALTER TABLE `postreplies` DISABLE KEYS */;
-INSERT INTO `postreplies` VALUES (8,16,1,'This is a comment','2025-06-19 17:11:27'),(9,16,1,'This is epic lol\r\nhahahahahahahahaa','2025-06-19 17:11:39'),(10,16,1,'Noit nei','2025-06-19 17:11:51'),(15,17,1,'Sweeettt!!!','2025-06-20 13:25:01');
+INSERT INTO `postreplies` VALUES (8,16,1,'This is a comment','2025-06-19 17:11:27'),(9,16,1,'This is epic lol\r\nhahahahahahahahaa','2025-06-19 17:11:39'),(10,16,1,'Noit nei','2025-06-19 17:11:51'),(15,17,1,'Sweeettt!!!','2025-06-20 13:25:01'),(16,38,1,'Nie so snaaks nie','2025-06-21 07:09:36'),(17,21,1,'looooll','2025-06-21 07:26:01');
 /*!40000 ALTER TABLE `postreplies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`),
   KEY `fk_posts_user` (`user_id`),
   CONSTRAINT `fk_posts_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (16,2,'asdf','uploads/Wilmer/1750341320_blank.jpg','asdf','2025-06-19 13:55:20',2),(17,2,'AFDS',NULL,'SDG','2025-06-19 14:13:11',2),(21,4,'Windows vs Linux','uploads/brogrammer/1750434607_4gb-ram-on-linux-vs-windows-v0-8dwpkl3smo6f1.webp','I choose linux lol','2025-06-20 15:50:07',0),(22,4,'Poor guy','uploads/brogrammer/1750434648_7oz1ep486i3f1.webp','So true!','2025-06-20 15:50:48',0),(23,4,'WHY?','uploads/brogrammer/1750434717_aka-vibe-coders-v0-0at05ai3z08f1.webp','WHY?','2025-06-20 15:51:57',0),(24,4,'He did what?????','uploads/brogrammer/1750434777_f1s1l7dl1blc1.webp','Imagine coding in Hebrew????!!!','2025-06-20 15:52:57',0),(25,4,'Ah yes...ooooo','uploads/brogrammer/1750434821_some-easy-code-v0-tpt4r7u9ewjc1.webp','oooooooo','2025-06-20 15:53:41',0),(26,4,'huh???','uploads/brogrammer/1750434864_i-guess-that-works-v0-0p86nc79himc1.webp','','2025-06-20 15:54:24',0),(27,5,'Thoughts?','uploads/MemerMannnnn/1750435099_8-years-old-me-v0-ko3l9d5p3k7f1.webp','An intrusive though if you will','2025-06-20 15:58:19',0),(28,5,'Parents do be cooking','uploads/MemerMannnnn/1750435127_good-olwd-days-v0-k0x37brtg28f1.webp','','2025-06-20 15:58:47',0),(29,5,'Doge','uploads/MemerMannnnn/1750435168_meme.webp','Dogs ammirite????','2025-06-20 15:59:28',0),(30,5,'Is this true?????','uploads/MemerMannnnn/1750435223_ka0npcwe238f1.mp4','','2025-06-20 16:00:23',0),(31,5,'Patriccc????','uploads/MemerMannnnn/1750435277_patric.jpg','Guilty lol','2025-06-20 16:01:17',0),(32,6,'Who\'s this???','uploads/MuscleCarDealer/1750435483_31o4kla09hj41.webp','Saw this beaut the other day','2025-06-20 16:04:43',0),(33,6,'Such a classic!!','uploads/MuscleCarDealer/1750435525_bniri8om7jt41.webp','Don\'t know what it is lol','2025-06-20 16:05:25',0),(34,6,'An old chevy?','uploads/MuscleCarDealer/1750435563_images.jpeg','What is this?','2025-06-20 16:06:03',0),(35,6,'Screaming eagle sound intensifies','uploads/MuscleCarDealer/1750435632_Untitled4.jpeg','','2025-06-20 16:07:12',0),(36,6,'Ford mustang','uploads/MuscleCarDealer/1750435681_imaasasges.jpeg','The blue on this car!!!!','2025-06-20 16:08:01',0),(37,4,'HAHA','uploads/brogrammer/1750435747_love-python-v0-4kjwejella7f1.webp','Python slow sometimes','2025-06-20 16:09:07',0);
+INSERT INTO `posts` VALUES (16,2,'asdf','uploads/Wilmer/1750341320_blank.jpg','asdf','2025-06-19 13:55:20',2),(17,2,'AFDS',NULL,'SDG','2025-06-19 14:13:11',2),(21,4,'Windows vs Linux','uploads/brogrammer/1750434607_4gb-ram-on-linux-vs-windows-v0-8dwpkl3smo6f1.webp','I choose linux lol','2025-06-20 15:50:07',0),(22,4,'Poor guy','uploads/brogrammer/1750434648_7oz1ep486i3f1.webp','So true!','2025-06-20 15:50:48',0),(23,4,'WHY?','uploads/brogrammer/1750434717_aka-vibe-coders-v0-0at05ai3z08f1.webp','WHY?','2025-06-20 15:51:57',0),(24,4,'He did what?????','uploads/brogrammer/1750434777_f1s1l7dl1blc1.webp','Imagine coding in Hebrew????!!!','2025-06-20 15:52:57',0),(25,4,'Ah yes...ooooo','uploads/brogrammer/1750434821_some-easy-code-v0-tpt4r7u9ewjc1.webp','oooooooo','2025-06-20 15:53:41',0),(26,4,'huh???','uploads/brogrammer/1750434864_i-guess-that-works-v0-0p86nc79himc1.webp','','2025-06-20 15:54:24',0),(27,5,'Thoughts?','uploads/MemerMannnnn/1750435099_8-years-old-me-v0-ko3l9d5p3k7f1.webp','An intrusive though if you will','2025-06-20 15:58:19',1),(28,5,'Parents do be cooking','uploads/MemerMannnnn/1750435127_good-olwd-days-v0-k0x37brtg28f1.webp','','2025-06-20 15:58:47',1),(29,5,'Doge','uploads/MemerMannnnn/1750435168_meme.webp','Dogs ammirite????','2025-06-20 15:59:28',1),(30,5,'Is this true?????','uploads/MemerMannnnn/1750435223_ka0npcwe238f1.mp4','','2025-06-20 16:00:23',0),(31,5,'Patriccc????','uploads/MemerMannnnn/1750435277_patric.jpg','Guilty lol','2025-06-20 16:01:17',1),(32,6,'Who\'s this???','uploads/MuscleCarDealer/1750435483_31o4kla09hj41.webp','Saw this beaut the other day','2025-06-20 16:04:43',0),(33,6,'Such a classic!!','uploads/MuscleCarDealer/1750435525_bniri8om7jt41.webp','Don\'t know what it is lol','2025-06-20 16:05:25',0),(34,6,'An old chevy?','uploads/MuscleCarDealer/1750435563_images.jpeg','What is this?','2025-06-20 16:06:03',0),(35,6,'Screaming eagle sound intensifies','uploads/MuscleCarDealer/1750435632_Untitled4.jpeg','','2025-06-20 16:07:12',0),(36,6,'Ford mustang','uploads/MuscleCarDealer/1750435681_imaasasges.jpeg','The blue on this car!!!!','2025-06-20 16:08:01',0),(37,4,'HAHA','uploads/brogrammer/1750435747_love-python-v0-4kjwejella7f1.webp','Python slow sometimes','2025-06-20 16:09:07',0),(38,1,'Haha','uploads/Enrico/1750489759_Untitledsdsd.jpeg','Die bra is snaaks','2025-06-21 07:09:19',1);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('40d690c638261a251ee25c2ea3cb4a854dda6f63','Brogrammer',1750435747),('5de64d760aa6b2b15b613f3822672dcb3559983e','memerman@gmail.com',1750435277),('67011ef99bb4d15451fbcb2872f10f5f77ebb983','cars@gmail.com',1750435681),('d3d0ec22c441334e08defc9d17b8c7b3bf8e96ee','jw',1750347769),('fbf9f8d17cef264e15f9a0cd4537f867eccd70b3','Wilmer',1750428741);
+INSERT INTO `sessions` VALUES ('40d690c638261a251ee25c2ea3cb4a854dda6f63','Brogrammer',1750435747),('5de64d760aa6b2b15b613f3822672dcb3559983e','memerman@gmail.com',1750435277),('67011ef99bb4d15451fbcb2872f10f5f77ebb983','cars@gmail.com',1750435681),('d3d0ec22c441334e08defc9d17b8c7b3bf8e96ee','jw',1750347769),('d50858933a8b1b466cefafb0cc63072d424c2139','Enrico',1750494127),('fbf9f8d17cef264e15f9a0cd4537f867eccd70b3','Wilmer',1750428741);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +154,7 @@ CREATE TABLE `topicfollows` (
 
 LOCK TABLES `topicfollows` WRITE;
 /*!40000 ALTER TABLE `topicfollows` DISABLE KEYS */;
+INSERT INTO `topicfollows` VALUES (1,26,'2025-06-21 07:24:32');
 /*!40000 ALTER TABLE `topicfollows` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +175,7 @@ CREATE TABLE `topicmessages` (
   KEY `fk_topicmessages_post` (`post_id`),
   CONSTRAINT `fk_topicmessages_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_topicmessages_topic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +184,7 @@ CREATE TABLE `topicmessages` (
 
 LOCK TABLES `topicmessages` WRITE;
 /*!40000 ALTER TABLE `topicmessages` DISABLE KEYS */;
-INSERT INTO `topicmessages` VALUES (9,14,17,'2025-06-19 14:13:11'),(16,23,21,'2025-06-20 15:50:07'),(17,12,21,'2025-06-20 15:50:07'),(18,24,21,'2025-06-20 15:50:07'),(19,24,22,'2025-06-20 15:50:48'),(20,12,22,'2025-06-20 15:50:48'),(21,12,23,'2025-06-20 15:51:57'),(22,24,23,'2025-06-20 15:51:57'),(23,25,23,'2025-06-20 15:51:57'),(24,24,24,'2025-06-20 15:52:57'),(25,23,24,'2025-06-20 15:52:57'),(26,23,25,'2025-06-20 15:53:41'),(27,26,25,'2025-06-20 15:53:41'),(28,12,26,'2025-06-20 15:54:24'),(29,23,26,'2025-06-20 15:54:24'),(30,25,26,'2025-06-20 15:54:24'),(31,24,27,'2025-06-20 15:58:19'),(32,27,27,'2025-06-20 15:58:19'),(33,26,27,'2025-06-20 15:58:19'),(34,24,28,'2025-06-20 15:58:47'),(35,26,28,'2025-06-20 15:58:47'),(36,28,28,'2025-06-20 15:58:47'),(37,29,29,'2025-06-20 15:59:28'),(38,27,29,'2025-06-20 15:59:28'),(39,26,29,'2025-06-20 15:59:28'),(40,24,29,'2025-06-20 15:59:28'),(41,27,30,'2025-06-20 16:00:23'),(42,30,30,'2025-06-20 16:00:23'),(43,24,30,'2025-06-20 16:00:23'),(44,21,31,'2025-06-20 16:01:17'),(45,31,31,'2025-06-20 16:01:17'),(46,26,31,'2025-06-20 16:01:17'),(47,27,31,'2025-06-20 16:01:17'),(48,32,32,'2025-06-20 16:04:43'),(49,33,32,'2025-06-20 16:04:43'),(50,32,33,'2025-06-20 16:05:25'),(51,34,33,'2025-06-20 16:05:25'),(52,32,34,'2025-06-20 16:06:03'),(53,35,34,'2025-06-20 16:06:03'),(54,33,34,'2025-06-20 16:06:03'),(55,32,35,'2025-06-20 16:07:12'),(56,36,35,'2025-06-20 16:07:12'),(57,32,36,'2025-06-20 16:08:01'),(58,34,36,'2025-06-20 16:08:01'),(59,32,37,'2025-06-20 16:09:07'),(60,24,37,'2025-06-20 16:09:07'),(61,12,37,'2025-06-20 16:09:07');
+INSERT INTO `topicmessages` VALUES (9,14,17,'2025-06-19 14:13:11'),(16,23,21,'2025-06-20 15:50:07'),(17,12,21,'2025-06-20 15:50:07'),(18,24,21,'2025-06-20 15:50:07'),(19,24,22,'2025-06-20 15:50:48'),(20,12,22,'2025-06-20 15:50:48'),(21,12,23,'2025-06-20 15:51:57'),(22,24,23,'2025-06-20 15:51:57'),(23,25,23,'2025-06-20 15:51:57'),(24,24,24,'2025-06-20 15:52:57'),(25,23,24,'2025-06-20 15:52:57'),(26,23,25,'2025-06-20 15:53:41'),(27,26,25,'2025-06-20 15:53:41'),(28,12,26,'2025-06-20 15:54:24'),(29,23,26,'2025-06-20 15:54:24'),(30,25,26,'2025-06-20 15:54:24'),(31,24,27,'2025-06-20 15:58:19'),(32,27,27,'2025-06-20 15:58:19'),(33,26,27,'2025-06-20 15:58:19'),(34,24,28,'2025-06-20 15:58:47'),(35,26,28,'2025-06-20 15:58:47'),(36,28,28,'2025-06-20 15:58:47'),(37,29,29,'2025-06-20 15:59:28'),(38,27,29,'2025-06-20 15:59:28'),(39,26,29,'2025-06-20 15:59:28'),(40,24,29,'2025-06-20 15:59:28'),(41,27,30,'2025-06-20 16:00:23'),(42,30,30,'2025-06-20 16:00:23'),(43,24,30,'2025-06-20 16:00:23'),(44,21,31,'2025-06-20 16:01:17'),(45,31,31,'2025-06-20 16:01:17'),(46,26,31,'2025-06-20 16:01:17'),(47,27,31,'2025-06-20 16:01:17'),(48,32,32,'2025-06-20 16:04:43'),(49,33,32,'2025-06-20 16:04:43'),(50,32,33,'2025-06-20 16:05:25'),(51,34,33,'2025-06-20 16:05:25'),(52,32,34,'2025-06-20 16:06:03'),(53,35,34,'2025-06-20 16:06:03'),(54,33,34,'2025-06-20 16:06:03'),(55,32,35,'2025-06-20 16:07:12'),(56,36,35,'2025-06-20 16:07:12'),(57,32,36,'2025-06-20 16:08:01'),(58,34,36,'2025-06-20 16:08:01'),(59,32,37,'2025-06-20 16:09:07'),(60,24,37,'2025-06-20 16:09:07'),(61,12,37,'2025-06-20 16:09:07'),(62,26,38,'2025-06-21 07:09:19'),(63,34,38,'2025-06-21 07:09:19'),(64,12,38,'2025-06-21 07:09:19');
 /*!40000 ALTER TABLE `topicmessages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +267,7 @@ CREATE TABLE `votes` (
 
 LOCK TABLES `votes` WRITE;
 /*!40000 ALTER TABLE `votes` DISABLE KEYS */;
-INSERT INTO `votes` VALUES (0,2,-1),(0,3,-1),(1,16,1),(1,17,1),(1,18,1),(2,13,1),(2,14,-1),(2,15,-1),(2,16,1),(2,17,1);
+INSERT INTO `votes` VALUES (0,2,-1),(0,3,-1),(1,16,1),(1,17,1),(1,18,1),(1,27,1),(1,28,1),(1,29,1),(1,31,1),(1,38,1),(2,13,1),(2,14,-1),(2,15,-1),(2,16,1),(2,17,1);
 /*!40000 ALTER TABLE `votes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -279,4 +280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-20 18:10:48
+-- Dump completed on 2025-06-21 10:23:46

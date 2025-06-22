@@ -91,7 +91,7 @@ header {
   left: 0;
   width: 250px;
   height: calc(100vh - 100px);
-  background: white;
+  background-color: #242526;
   border-right: 1px solid #ddd;
   padding: 15px;
   overflow-y: auto;
@@ -245,10 +245,17 @@ main {
   color: #888;
   margin-bottom: 10px;
 }
+
+.post-media{
+  display: flex;
+  justify-content: center;
+}
+
 .post-media img {
   max-width: 100%;
   border-radius: 8px;
   margin-top: 10px;
+  max-height: 500px;
 }
 
 /* Post Actions */
@@ -380,11 +387,11 @@ main {
 /* ========== HOME PAGE STYLES ========== */
 
 .sidebar h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
   font-size: 1.1rem;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
+  color: #ffffff;
 }
 
 .sidebar ul {
@@ -398,6 +405,14 @@ main {
   padding-left: 15px; /* <-- this is your tab */
   border-bottom: 1px solid #eee;
   transition: background 0.2s;
+}
+
+.sidebar li a {
+  padding: 6px 0;
+  padding-left: 15px; /* <-- this is your tab */
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+  color: #f0f0f0;
 }
 
 .sidebar li:hover {

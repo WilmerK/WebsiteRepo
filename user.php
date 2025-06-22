@@ -97,22 +97,54 @@ include('header.php');
                         <?php if (!empty($post['caption'])): ?>
                             <p class="post-caption">
                                 <?php
-                                $caption = $post['caption'];
-                                $escaped = nl2br(htmlspecialchars($caption));
-                                $withEmbeds = preg_replace(
-                                    '/(https?:\/\/[^\s]+?\.(png|jpe?g|gif|webp))/i',
-                                    '<br><img src="imageProxy.php?url=$1" alt="Embedded Image" style="max-width:100%; border-radius:6px; margin-top:10px;">',
-                                    $escaped
-                                );
-                                echo $withEmbeds;
+                                    $caption = $post['caption'];
+                                    $escaped = nl2br(htmlspecialchars($caption));
+                                    // First: embed videos
+                                    $withEmbeds = preg_replace(
+                                        '/(https?:\/\/[^\s]+?\.(mp4|webm|ogg))/i',
+                                        '<br><video controls style="max-width:100%; border-radius:6px; margin-top:10px;"><source src="imageProxy.php?url=$1" type="video/$2">Your browser does not support the video tag.</video>',
+                                        $escaped
+                                    );
+
+                                    // Then: embed images
+                                    $withEmbeds = preg_replace(
+                                        '/(https?:\/\/[^\s]+?\.(png|jpe?g|gif|webp))/i',
+                                        '<br><img src="imageProxy.php?url=$1" alt="Embedded Image" style="max-width:100%; border-radius:6px; margin-top:10px;">',
+                                        $withEmbeds
+                                    );
                                 ?>
                             </p>
                         <?php endif; ?>
 
-
+                        
                         <?php if (!empty($post['media_url'])): ?>
+
                             <div class="post-media">
-                                <img src="<?php echo htmlspecialchars($post['media_url']); ?>" alt="Post media">
+                                <?php
+                                //Get the media url
+                                    $mediaUrl = htmlspecialchars($post['media_url'], ENT_QUOTES);
+
+                                    // Get the file extension
+                                    $extension = strtolower(pathinfo($mediaUrl, PATHINFO_EXTENSION));
+
+                                    // Define supported types
+                                    $imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                    $videoTypes = ['mp4', 'webm', 'ogg'];
+
+                                    //Check if the format is good
+                                    if (in_array($extension, $imageTypes)) {
+                                        //If it is of type image, post the image
+                                        echo '<img src="' . $mediaUrl . '" alt="Post media" style="max-width:100%; border-radius:8px; margin-top:10px;">';
+                                    } elseif (in_array($extension, $videoTypes)) {
+                                        //If it is of type video, post the video
+                                        echo '<video controls style="max-width:100%; border-radius:8px; margin-top:10px;">
+                                                <source src="' . $mediaUrl . '" type="video/' . $extension . '">
+                                                Your browser does not support the video tag.
+                                            </video>';
+                                    } else {
+                                        echo '<p>Unsupported media format.</p>';
+                                    }
+                                ?>
                             </div>
                         <?php endif; ?>
 

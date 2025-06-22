@@ -342,11 +342,13 @@ function postContent($userid, $title, $media_url, $caption, $tags)
 	$q->execute();
 	$post_id = $q->insert_id;
 
-	// Handle tags
-	if (!empty($tags)) {
+	// Filter out empty or whitespace-only tags
+	$tags = array_filter(array_map('trim', $tags), fn($t) => $t !== '');
+
+	if (count($tags) > 0) {
+		// Insert each valid tag
 		foreach ($tags as $tag) {
-			$tag = strtolower(trim($tag));
-			// Find or insert topic
+			$tag = strtolower($tag);
 			$res = findTopic($tag);
 			if (!$res[0]) {
 				$q = $db->prepare("INSERT INTO topics (name) VALUES (?)");
@@ -356,7 +358,6 @@ function postContent($userid, $title, $media_url, $caption, $tags)
 			}
 			$topic_id = $res[1];
 
-			// Insert into topicmessages
 			$q = $db->prepare("INSERT INTO topicmessages (topic_id, post_id) VALUES (?, ?)");
 			$q->bind_param("ii", $topic_id, $post_id);
 			$q->execute();
@@ -378,6 +379,7 @@ function postContent($userid, $title, $media_url, $caption, $tags)
 		$q->execute();
 	}
 }
+
 
 
 //Looks for a topic
@@ -497,14 +499,23 @@ function getTopicPostCount($topicid)
 //Deletes a topic
 function deleteTopic($topicid)
 {
-	global $db;
-	$q = $db->prepare("DELETE FROM topics WHERE id = ?");
-	$q->bind_param("i", $topicid);
-	//Checks if the query executed
-	if ($q->execute())
-		return true;
-	return false;
+    global $db;
+    
+    // Prevent deletion of "general"
+    $stmt = $db->prepare("SELECT name FROM topics WHERE id = ?");
+    $stmt->bind_param("i", $topicid);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($res->num_rows) {
+        $row = $res->fetch_assoc();
+        if (strtolower($row['name']) === 'general') return false;
+    }
+
+    $q = $db->prepare("DELETE FROM topics WHERE id = ?");
+    $q->bind_param("i", $topicid);
+    return $q->execute();
 }
+
 
 //This will return the top 5 of each heading on the sidebar
 function sidebarPopulate($userid)

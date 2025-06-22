@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_id'])) {
 }
 
 // Fetch post using $post_id
-$stmt = $pdo->prepare("SELECT posts.*, users.username, users.full_name FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
+$stmt = $pdo->prepare("SELECT posts.*, users.username, users.full_name, users.profile_picture FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
 $stmt->execute([$post_id]);
 $post = $stmt->fetch();
 
@@ -36,44 +36,17 @@ if (!$post) {
 $commentStmt = $pdo->prepare("SELECT postreplies.*, users.username FROM postreplies JOIN users ON postreplies.user_id = users.id WHERE post_id = ? ORDER BY created_at ASC");
 $commentStmt->execute([$post_id]);
 $comments = $commentStmt->fetchAll();
+include('header.php');
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Post View</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link rel="stylesheet" href="user.css">
-</head>
 
 <body>
   <!-- Header -->
-  <header>
-    <div class="top-left">
-      <img class="logo" src="images/4chenlogo.jpg" alt="4chen Logo" />
-      <span class="brand">4chen</span>
-    </div>
-    <div class="search-container">
-      <input type="text" class="search-bar" placeholder="Search..." />
-    </div>
-    <a class="top-right" href="user.php?username=<?php echo urlencode($_SESSION['myUsername']); ?>">
-      <img src="https://randomuser.me/api/portraits/men/68.jpg" class="profile-pic-header" />
-    </a>
-  </header>
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <?php fancyLeft(); ?>
-  </aside>
+  <?php include('topbar.php'); ?>
+  <?php include('sidebar.php'); ?>
 
   <a href="user.php?username=<?php echo urlencode($post['username']); ?>" class="back-button" title="Back">
     <span class="material-symbols-outlined">arrow_back</span>
   </a>
-
-
 
   <!-- Main -->
   <main>
@@ -82,16 +55,70 @@ $comments = $commentStmt->fetchAll();
       <!-- Display Single Post -->
       <div class="post">
         <div class="post-meta">
-          <?php
-          echo htmlspecialchars($post['username']) . ' – ' . date("Y-m-d H:i", strtotime($post['created_at']));
-          ?>
+          <img src="<?php echo htmlspecialchars($post['profile_picture']); ?>" class="profile-pic-header">
+          <strong>
+            <a href="user.php?username=<?php echo urlencode($post['username']); ?>">
+              <?php echo htmlspecialchars($post['username']); ?>
+            </a>
+          </strong>
+          <?php echo date("Y-m-d H:i", strtotime($post['created_at'])); ?>
         </div>
-        <?php if (!empty($post['caption'])): ?>
-          <p><?php echo nl2br(htmlspecialchars($post['caption'])); ?></p>
+
+        <?php if (!empty($post['title'])): ?>
+          <h3 class="post-title"><?php echo htmlspecialchars($post['title']); ?></h3>
         <?php endif; ?>
+
+        <?php if (!empty($post['caption'])): ?>
+          <p class="post-caption">
+            <?php
+            $caption = $post['caption'];
+            $escaped = nl2br(htmlspecialchars($caption));
+            // First: embed videos
+            $withEmbeds = preg_replace(
+                '/(https?:\/\/[^\s]+?\.(mp4|webm|ogg))/i',
+                '<br><video controls style="max-width:100%; border-radius:6px; margin-top:10px;"><source src="imageProxy.php?url=$1" type="video/$2">Your browser does not support the video tag.</video>',
+                $escaped
+            );
+
+            // Then: embed images
+            $withEmbeds = preg_replace(
+                '/(https?:\/\/[^\s]+?\.(png|jpe?g|gif|webp))/i',
+                '<br><img src="imageProxy.php?url=$1" alt="Embedded Image" style="max-width:100%; border-radius:6px; margin-top:10px;">',
+                $withEmbeds
+            );
+            echo $withEmbeds;
+            ?>
+          </p>
+        <?php endif; ?>
+
+
         <?php if (!empty($post['media_url'])): ?>
           <div class="post-media">
-            <img src="<?php echo htmlspecialchars($post['media_url']); ?>" alt="Post media">
+            <?php
+              //Get the media url
+              $mediaUrl = htmlspecialchars($post['media_url'], ENT_QUOTES);
+
+              // Get the file extension
+              $extension = strtolower(pathinfo($mediaUrl, PATHINFO_EXTENSION));
+
+              // Define supported types
+              $imageTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+              $videoTypes = ['mp4', 'webm', 'ogg'];
+
+              //Check if the format is good
+              if (in_array($extension, $imageTypes)) {
+                  //If it is of type image, post the image
+                  echo '<img src="' . $mediaUrl . '" alt="Post media" style="max-width:100%; border-radius:8px; margin-top:10px;">';
+              } elseif (in_array($extension, $videoTypes)) {
+                  //If it is of type video, post the video
+                  echo '<video controls style="max-width:100%; border-radius:8px; margin-top:10px;">
+                          <source src="' . $mediaUrl . '" type="video/' . $extension . '">
+                          Your browser does not support the video tag.
+                      </video>';
+              } else {
+                  echo '<p>Unsupported media format.</p>';
+              }
+            ?>
           </div>
         <?php endif; ?>
       </div>
